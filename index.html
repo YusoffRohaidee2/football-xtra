@@ -155,31 +155,9 @@
                         <span class="text-xs font-extrabold text-amber-400 uppercase tracking-wider flex items-center gap-1.5">
                             <span class="w-2 h-2 rounded-full bg-amber-400"></span> Segment 1
                         </span>
-                        <span class="text-[10px] bg-amber-500/10 text-amber-300 px-1.5 py-0.5 rounded border border-amber-500/20 font-semibold">ACL Two</span>
+                        <span class="text-[10px] bg-amber-500/10 text-amber-300 px-1.5 py-0.5 rounded border border-amber-500/20 font-semibold">Live Channels</span>
                     </div>
                     <div class="space-y-1.5" id="list-seg1"></div>
-                </div>
-
-                <!-- SEGMENT 2 -->
-                <div class="segment-group" data-segment="seg2">
-                    <div class="flex items-center justify-between mb-2 px-1">
-                        <span class="text-xs font-extrabold text-cyan-400 uppercase tracking-wider flex items-center gap-1.5">
-                            <span class="w-2 h-2 rounded-full bg-cyan-400"></span> Segment 2
-                        </span>
-                        <span class="text-[10px] bg-cyan-500/10 text-cyan-300 px-1.5 py-0.5 rounded border border-cyan-500/20 font-semibold">ACL Elite</span>
-                    </div>
-                    <div class="space-y-1.5" id="list-seg2"></div>
-                </div>
-
-                <!-- SEGMENT 3 -->
-                <div class="segment-group" data-segment="seg3">
-                    <div class="flex items-center justify-between mb-2 px-1">
-                        <span class="text-xs font-extrabold text-emerald-400 uppercase tracking-wider flex items-center gap-1.5">
-                            <span class="w-2 h-2 rounded-full bg-emerald-400"></span> Segment 3
-                        </span>
-                        <span class="text-[10px] bg-emerald-500/10 text-emerald-300 px-1.5 py-0.5 rounded border border-emerald-500/20 font-semibold">Saudi Pro League</span>
-                    </div>
-                    <div class="space-y-1.5" id="list-seg3"></div>
                 </div>
 
             </div>
@@ -232,7 +210,7 @@
                         </div>
                         <h3 class="text-lg font-bold text-white mb-1">Live Sports Broadcast</h3>
                         <p class="text-xs text-gray-400 max-w-sm">
-                            Please select any channel from Segment 1, Segment 2, or Segment 3 on the left sidebar.
+                            Please select any channel from the left sidebar.
                         </p>
                     </div>
                 </div>
@@ -253,27 +231,6 @@
                     </div>
                 </div>
 
-                <!-- Quick Navigation Cards -->
-                <div class="grid grid-cols-1 sm:grid-cols-3 gap-3 pt-2">
-                    <div onclick="openSegmentInSidebar('seg1')" class="p-3 rounded-xl bg-brand-card/70 border border-brand-border hover:border-amber-500/40 cursor-pointer transition">
-                        <div class="text-[10px] text-amber-400 font-bold uppercase">Segment 1</div>
-                        <div class="text-xs font-bold text-white mt-0.5">AFC Champions League Two</div>
-                        <div class="text-[10px] text-gray-400 mt-1">6 Live Channels</div>
-                    </div>
-
-                    <div onclick="openSegmentInSidebar('seg2')" class="p-3 rounded-xl bg-brand-card/70 border border-brand-border hover:border-cyan-500/40 cursor-pointer transition">
-                        <div class="text-[10px] text-cyan-400 font-bold uppercase">Segment 2</div>
-                        <div class="text-xs font-bold text-white mt-0.5">AFC Champions League Elite</div>
-                        <div class="text-[10px] text-gray-400 mt-1">6 Live Channels</div>
-                    </div>
-
-                    <div onclick="openSegmentInSidebar('seg3')" class="p-3 rounded-xl bg-brand-card/70 border border-brand-border hover:border-emerald-500/40 cursor-pointer transition">
-                        <div class="text-[10px] text-emerald-400 font-bold uppercase">Segment 3</div>
-                        <div class="text-xs font-bold text-white mt-0.5">Saudi Pro League (SPL)</div>
-                        <div class="text-[10px] text-gray-400 mt-1">SPOTV Asia</div>
-                    </div>
-                </div>
-
             </div>
 
         </main>
@@ -286,23 +243,13 @@
         // Data Structure for Segments and Channels
         const channelsData = {
             seg1: [
-                { id: 'seg1-bein1', name: "beIN Sports 1 Arabia HD", type: "m3u8", src: "https://cp11.adabmedia.com/hls2/bein1.m3u8", tag: "ACL Two" },
-                { id: 'seg1-bein2', name: "beIN Sports 2 Arabia HD", type: "m3u8", src: "https://cp11.adabmedia.com/hls2/bein2.m3u8", tag: "ACL Two" },
-                { id: 'seg1-bein3', name: "beIN Sports 3 Arabia HD", type: "m3u8", src: "https://cp11.adabmedia.com/hls2/bein3.m3u8", tag: "ACL Two" },
-                { id: 'seg1-inews', name: "iNews", type: "iframe", src: "https://player.icanplay.my.id/?url=https://idstream.co-id.id/inews.m3u8", tag: "ACL Two" },
-                { id: 'seg1-rcti', name: "RCTI", type: "iframe", src: "https://player.icanplay.my.id/?url=https://idstream.co-id.id/rcti.m3u8", tag: "ACL Two" },
-                { id: 'seg1-gtv', name: "GTV", type: "iframe", src: "https://player.icanplay.my.id/?url=https://idstream.co-id.id/gtv.m3u8", tag: "ACL Two" }
-            ],
-            seg2: [
-                { id: 'seg2-bein1', name: "beIN Sports 1 Arabia HD", type: "m3u8", src: "https://cp11.adabmedia.com/hls2/bein1.m3u8", tag: "ACL Elite" },
-                { id: 'seg2-bein2', name: "beIN Sports 2 Arabia HD", type: "m3u8", src: "https://cp11.adabmedia.com/hls2/bein2.m3u8", tag: "ACL Elite" },
-                { id: 'seg2-bein3', name: "beIN Sports 3 Arabia HD", type: "m3u8", src: "https://cp11.adabmedia.com/hls2/bein3.m3u8", tag: "ACL Elite" },
-                { id: 'seg2-inews', name: "iNews", type: "iframe", src: "https://player.icanplay.my.id/?url=https://idstream.co-id.id/inews.m3u8", tag: "ACL Elite" },
-                { id: 'seg2-rcti', name: "RCTI", type: "iframe", src: "https://player.icanplay.my.id/?url=https://idstream.co-id.id/rcti.m3u8", tag: "ACL Elite" },
-                { id: 'seg2-gtv', name: "GTV", type: "iframe", src: "https://player.icanplay.my.id/?url=https://idstream.co-id.id/gtv.m3u8", tag: "ACL Elite" }
-            ],
-            seg3: [
-                { id: 'seg3-spotv', name: "SPOTV Asia", type: "iframe", src: "https://bdixtv24.com/tv2.php?id=https://qp-pldt-live-grp-11-prod.akamaized.net/out/u/dr_spotvhd.mpd?%7CdrmScheme=clearkey&drmLicense=ec7ee27d83764e4b845c48cca31c8eef:9c0e4191203fccb0fde34ee29999129e", tag: "Saudi Pro League" }
+                { id: 'seg1-bein1', name: "beIN Sports 1 Arabia HD", type: "m3u8", src: "https://cp11.adabmedia.com/hls2/bein1.m3u8", tag: "Live" },
+                { id: 'seg1-sony2', name: "Sony Sports Ten 2", type: "m3u8", src: "https://footfytv.pro/proxy/direct?url=http://103.151.60.162:2122/play/a01b/index.m3u8?hls", tag: "Live" },
+                { id: 'seg1-fs1', name: "FS1 USA", type: "m3u8", src: "https://footfytv.pro/proxy/direct?url=http://85.237.89.160:9590/usa-s/FOX-SPORTS-1/index.m3u8", tag: "Live" },
+                { id: 'seg1-rcti', name: "RCTI Digital FHD", type: "m3u8", src: "https://footfytv.pro/proxy/direct?url=http://202.150.172.59/RCTIHD/index.m3u8", tag: "Indonesia" },
+                { id: 'seg1-gtv', name: "GTV Digital FHD", type: "m3u8", src: "https://footfytv.pro/proxy/direct?url=http://202.150.172.59/GTVHD/index.m3u8", tag: "Indonesia" },
+                { id: 'seg1-inews', name: "iNews Digital FHD", type: "m3u8", src: "https://footfytv.pro/proxy/direct?url=http://202.150.172.59/iNews/index.m3u8", tag: "Indonesia" },
+                { id: 'seg1-antv', name: "ANTV Digital FHD", type: "m3u8", src: "https://iptv.lancartech.co.id:443/Wawan007/Wawan1234/1.m3u8", tag: "Indonesia" }
             ]
         };
 
@@ -442,17 +389,6 @@
             const overlay = document.getElementById('sidebarOverlay');
             sidebar.classList.toggle('-translate-x-full');
             overlay.classList.toggle('hidden');
-        }
-
-        // Open specific segment in mobile view
-        function openSegmentInSidebar(segId) {
-            if (window.innerWidth < 1024) {
-                toggleSidebar();
-            }
-            const el = document.querySelector(`[data-segment="${segId}"]`);
-            if (el) {
-                el.scrollIntoView({ behavior: 'smooth' });
-            }
         }
 
         window.onload = function() {
