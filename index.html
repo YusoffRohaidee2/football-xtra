@@ -50,7 +50,6 @@
             0%, 100% { opacity: 1; transform: scale(1); }
             50% { opacity: 0.4; transform: scale(0.95); }
         }
-        /* Customizing Video.js player dimensions and styling */
         .video-js {
             width: 100% !important;
             height: 100% !important;
@@ -72,7 +71,6 @@
         .vjs-matrix .vjs-play-progress {
             background-color: #00E5FF;
         }
-        /* Custom Scrollbar */
         ::-webkit-scrollbar {
             width: 5px;
             height: 5px;
@@ -112,15 +110,26 @@
             </div>
         </div>
 
-        <div class="flex items-center gap-3">
+        <!-- Tab Navigation Switcher -->
+        <div class="flex items-center bg-brand-card p-1 rounded-xl border border-brand-border">
+            <button onclick="switchTab('livestream')" id="tabBtn-livestream" class="px-4 py-1.5 rounded-lg text-xs font-bold transition bg-cyan-500 text-black shadow">
+                <i class="fa-solid fa-play mr-1.5"></i> Live Stream
+            </button>
+            <button onclick="switchTab('schedule')" id="tabBtn-schedule" class="px-4 py-1.5 rounded-lg text-xs font-bold transition text-gray-400 hover:text-white">
+                <i class="fa-solid fa-calendar-days mr-1.5"></i> Schedule
+            </button>
+        </div>
+
+        <div class="hidden sm:flex items-center gap-3">
             <div class="flex items-center gap-2 px-3 py-1 rounded-full bg-red-500/10 border border-red-500/30 text-red-400 text-xs font-semibold">
                 <span class="w-2 h-2 rounded-full bg-red-500 pulse-live"></span>
-                <span>LIVE STREAM</span>
+                <span>LIVE HUB</span>
             </div>
         </div>
     </header>
 
-    <div class="flex-1 flex overflow-hidden">
+    <!-- TAB 1: LIVE STREAM VIEW -->
+    <div id="tabContent-livestream" class="flex-1 flex overflow-hidden">
 
         <!-- Mobile Sidebar Overlay -->
         <div id="sidebarOverlay" onclick="toggleSidebar()" class="fixed inset-0 bg-black/70 z-40 hidden lg:hidden backdrop-blur-sm"></div>
@@ -148,8 +157,6 @@
 
             <!-- Segments List -->
             <div class="flex-1 overflow-y-auto p-3 space-y-6" id="sidebarContent">
-                
-                <!-- SEGMENT 1 -->
                 <div class="segment-group" data-segment="seg1">
                     <div class="flex items-center justify-between mb-2 px-1">
                         <span class="text-xs font-extrabold text-amber-400 uppercase tracking-wider flex items-center gap-1.5">
@@ -159,7 +166,6 @@
                     </div>
                     <div class="space-y-1.5" id="list-seg1"></div>
                 </div>
-
             </div>
 
             <div class="p-3 border-t border-brand-border bg-brand-card/50 text-[11px] text-gray-400 flex items-center justify-between">
@@ -172,7 +178,6 @@
 
         <!-- MAIN CONTENT AREA -->
         <main class="flex-1 overflow-y-auto p-4 lg:p-6 flex flex-col items-center">
-            
             <div class="w-full max-w-4xl space-y-4">
                 
                 <!-- Player Title Header -->
@@ -190,8 +195,6 @@
 
                 <!-- Compact Video Player Frame -->
                 <div class="relative w-full aspect-video rounded-2xl overflow-hidden bg-black border border-brand-border shadow-2xl group">
-                    
-                    <!-- Video.js HTML5 Video Player -->
                     <div id="videojs-wrapper" class="w-full h-full hidden">
                         <video id="videojs-player" class="video-js vjs-big-play-centered vjs-matrix" controls preload="auto" crossorigin="anonymous">
                             <p class="vjs-no-js">
@@ -199,11 +202,8 @@
                             </p>
                         </video>
                     </div>
-                    
-                    <!-- iFrame Player Container -->
                     <iframe id="iframePlayer" class="w-full h-full border-0 hidden" allowfullscreen allow="autoplay; encrypted-media"></iframe>
 
-                    <!-- Initial Placeholder Screen -->
                     <div id="playerPlaceholder" class="absolute inset-0 flex flex-col items-center justify-center p-6 text-center bg-gradient-to-b from-gray-900/90 to-brand-dark">
                         <div class="w-16 h-16 rounded-full bg-cyan-500/10 border border-cyan-500/30 flex items-center justify-center mb-3 group-hover:scale-105 transition duration-300">
                             <i class="fa-solid fa-play text-2xl text-cyan-400 ml-1"></i>
@@ -232,17 +232,527 @@
                 </div>
 
             </div>
-
         </main>
+    </div>
+
+    <!-- TAB 2: SCHEDULE VIEW (Kecik Mengikut Liga) -->
+    <div id="tabContent-schedule" class="flex-1 overflow-y-auto p-4 lg:p-8 hidden">
+        <div class="max-w-6xl mx-auto space-y-6">
+            
+            <div class="flex items-center justify-between border-b border-brand-border pb-4">
+                <div>
+                    <h2 class="text-xl font-extrabold text-white flex items-center gap-2">
+                        <i class="fa-solid fa-calendar-alt text-cyan-400"></i> Match Schedules
+                    </h2>
+                    <p class="text-xs text-gray-400 mt-0.5">Senarai jadual perlawanan lengkap disusun mengikut liga masing-masing.</p>
+                </div>
+            </div>
+
+            <!-- Grid Kotak Liga -->
+            <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-5">
+                
+                <!-- Bundesliga -->
+                <div class="bg-brand-card border border-brand-border rounded-2xl p-4 shadow-lg flex flex-col justify-between">
+                    <div>
+                        <div class="flex items-center justify-between mb-3 border-b border-brand-border/60 pb-2">
+                            <h3 class="text-sm font-bold text-cyan-400 uppercase tracking-wide">Bundesliga</h3>
+                            <span class="text-[10px] bg-cyan-500/10 text-cyan-300 px-2 py-0.5 rounded border border-cyan-500/20 font-semibold">Germany</span>
+                        </div>
+                        <ul class="space-y-3 text-xs text-gray-300">
+                            <li class="bg-brand-dark/50 p-2 rounded-lg border border-brand-border/40">
+                                <span class="text-gray-400 block text-[10px] font-semibold mb-0.5">Saturday, 17 October 2026</span>
+                                <span class="text-white font-medium">02:30 — Eintracht Frankfurt vs Köln</span><br>
+                                <span class="text-cyan-400 text-[11px]">📺 NBC Universo</span>
+                            </li>
+                            <li class="bg-brand-dark/50 p-2 rounded-lg border border-brand-border/40">
+                                <span class="text-gray-400 block text-[10px] font-semibold mb-0.5">Saturday, 17 October 2026</span>
+                                <span class="text-white font-medium">21:30 — Union Berlin vs Borussia Dortmund</span><br>
+                                <span class="text-cyan-400 text-[11px]">📺 NBC Universo</span>
+                            </li>
+                            <li class="bg-brand-dark/50 p-2 rounded-lg border border-brand-border/40">
+                                <span class="text-gray-400 block text-[10px] font-semibold mb-0.5">Sunday, 18 October 2026</span>
+                                <span class="text-white font-medium">00:30 — Bayern München vs RB Leipzig</span><br>
+                                <span class="text-cyan-400 text-[11px]">📺 beIN Sports 1 Australia, USA Network</span>
+                            </li>
+                            <li class="bg-brand-dark/50 p-2 rounded-lg border border-brand-border/40">
+                                <span class="text-gray-400 block text-[10px] font-semibold mb-0.5">Sunday, 18 October 2026</span>
+                                <span class="text-white font-medium">23:30 — Borussia M’gladbach vs Hoffenheim</span><br>
+                                <span class="text-cyan-400 text-[11px]">📺 NBC Universo</span>
+                            </li>
+                            <li class="bg-brand-dark/50 p-2 rounded-lg border border-brand-border/40">
+                                <span class="text-gray-400 block text-[10px] font-semibold mb-0.5">Sunday, 25 October 2026</span>
+                                <span class="text-white font-medium">00:30 — Borussia Dortmund vs Eintracht Frankfurt</span><br>
+                                <span class="text-cyan-400 text-[11px]">📺 USA Network</span>
+                            </li>
+                        </ul>
+                    </div>
+                </div>
+
+                <!-- EFL Championship -->
+                <div class="bg-brand-card border border-brand-border rounded-2xl p-4 shadow-lg flex flex-col justify-between">
+                    <div>
+                        <div class="flex items-center justify-between mb-3 border-b border-brand-border/60 pb-2">
+                            <h3 class="text-sm font-bold text-amber-400 uppercase tracking-wide">EFL Championship</h3>
+                            <span class="text-[10px] bg-amber-500/10 text-amber-300 px-2 py-0.5 rounded border border-amber-500/20 font-semibold">England</span>
+                        </div>
+                        <ul class="space-y-3 text-xs text-gray-300">
+                            <li class="bg-brand-dark/50 p-2 rounded-lg border border-brand-border/40">
+                                <span class="text-gray-400 block text-[10px] font-semibold mb-0.5">Saturday, 17 October 2026</span>
+                                <span class="text-white font-medium">03:00 — Burnley vs Wolverhampton Wanderers</span><br>
+                                <span class="text-amber-400 text-[11px]">📺 beIN Sports Arabia 1</span>
+                            </li>
+                        </ul>
+                    </div>
+                </div>
+
+                <!-- Bundesliga 2 -->
+                <div class="bg-brand-card border border-brand-border rounded-2xl p-4 shadow-lg flex flex-col justify-between">
+                    <div>
+                        <div class="flex items-center justify-between mb-3 border-b border-brand-border/60 pb-2">
+                            <h3 class="text-sm font-bold text-cyan-400 uppercase tracking-wide">Bundesliga 2</h3>
+                            <span class="text-[10px] bg-cyan-500/10 text-cyan-300 px-2 py-0.5 rounded border border-cyan-500/20 font-semibold">Germany</span>
+                        </div>
+                        <ul class="space-y-3 text-xs text-gray-300">
+                            <li class="bg-brand-dark/50 p-2 rounded-lg border border-brand-border/40">
+                                <span class="text-gray-400 block text-[10px] font-semibold mb-0.5">Saturday, 17 October 2026</span>
+                                <span class="text-white font-medium">00:30 — Holstein Kiel vs Hertha BSC</span><br>
+                                <span class="text-cyan-400 text-[11px]">📺 beIN Sports 2 Australia</span>
+                            </li>
+                        </ul>
+                    </div>
+                </div>
+
+                <!-- Serie A -->
+                <div class="bg-brand-card border border-brand-border rounded-2xl p-4 shadow-lg flex flex-col justify-between">
+                    <div>
+                        <div class="flex items-center justify-between mb-3 border-b border-brand-border/60 pb-2">
+                            <h3 class="text-sm font-bold text-emerald-400 uppercase tracking-wide">Serie A</h3>
+                            <span class="text-[10px] bg-emerald-500/10 text-emerald-300 px-2 py-0.5 rounded border border-emerald-500/20 font-semibold">Italy</span>
+                        </div>
+                        <ul class="space-y-3 text-xs text-gray-300">
+                            <li class="bg-brand-dark/50 p-2 rounded-lg border border-brand-border/40">
+                                <span class="text-gray-400 block text-[10px] font-semibold mb-0.5">Saturday, 17 October 2026</span>
+                                <span class="text-white font-medium">02:45 — Frosinone vs Sassuolo</span><br>
+                                <span class="text-emerald-400 text-[11px]">📺 beIN Sports 1 Australia</span>
+                            </li>
+                            <li class="bg-brand-dark/50 p-2 rounded-lg border border-brand-border/40">
+                                <span class="text-gray-400 block text-[10px] font-semibold mb-0.5">Saturday, 17 October 2026</span>
+                                <span class="text-white font-medium">21:00 — Venezia vs Napoli</span><br>
+                                <span class="text-emerald-400 text-[11px]">📺 beIN Sports 2 Australia</span>
+                            </li>
+                            <li class="bg-brand-dark/50 p-2 rounded-lg border border-brand-border/40">
+                                <span class="text-gray-400 block text-[10px] font-semibold mb-0.5">Sunday, 18 October 2026</span>
+                                <span class="text-white font-medium">00:00 — Bologna vs Internazionale</span><br>
+                                <span class="text-emerald-400 text-[11px]">📺 beIN Sports 2 Australia</span>
+                            </li>
+                            <li class="bg-brand-dark/50 p-2 rounded-lg border border-brand-border/40">
+                                <span class="text-gray-400 block text-[10px] font-semibold mb-0.5">Sunday, 18 October 2026</span>
+                                <span class="text-white font-medium">02:45 — Roma vs Genoa</span><br>
+                                <span class="text-emerald-400 text-[11px]">📺 ANTV, beIN Sports 2 Australia</span>
+                            </li>
+                            <li class="bg-brand-dark/50 p-2 rounded-lg border border-brand-border/40">
+                                <span class="text-gray-400 block text-[10px] font-semibold mb-0.5">Sunday, 18 October 2026</span>
+                                <span class="text-white font-medium">18:30 — Udinese vs Lecce</span><br>
+                                <span class="text-emerald-400 text-[11px]">📺 beIN Sports 2 Australia</span>
+                            </li>
+                            <li class="bg-brand-dark/50 p-2 rounded-lg border border-brand-border/40">
+                                <span class="text-gray-400 block text-[10px] font-semibold mb-0.5">Sunday, 18 October 2026</span>
+                                <span class="text-white font-medium">21:00 — Fiorentina vs Como</span><br>
+                                <span class="text-emerald-400 text-[11px]">📺 NBC Universo, beIN Sports 2 Australia</span>
+                            </li>
+                            <li class="bg-brand-dark/50 p-2 rounded-lg border border-brand-border/40">
+                                <span class="text-gray-400 block text-[10px] font-semibold mb-0.5">Monday, 19 October 2026</span>
+                                <span class="text-white font-medium">00:00 — Milan vs Atalanta</span><br>
+                                <span class="text-emerald-400 text-[11px]">📺 ANTV, beIN Sports 2 Australia</span>
+                            </li>
+                            <li class="bg-brand-dark/50 p-2 rounded-lg border border-brand-border/40">
+                                <span class="text-gray-400 block text-[10px] font-semibold mb-0.5">Monday, 19 October 2026</span>
+                                <span class="text-white font-medium">02:45 — Juventus vs Lazio</span><br>
+                                <span class="text-emerald-400 text-[11px]">📺 beIN Sports 2 Australia</span>
+                            </li>
+                        </ul>
+                    </div>
+                </div>
+
+                <!-- Scottish Premiership -->
+                <div class="bg-brand-card border border-brand-border rounded-2xl p-4 shadow-lg flex flex-col justify-between">
+                    <div>
+                        <div class="flex items-center justify-between mb-3 border-b border-brand-border/60 pb-2">
+                            <h3 class="text-sm font-bold text-purple-400 uppercase tracking-wide">Scottish Premiership</h3>
+                            <span class="text-[10px] bg-purple-500/10 text-purple-300 px-2 py-0.5 rounded border border-purple-500/20 font-semibold">Scotland</span>
+                        </div>
+                        <ul class="space-y-3 text-xs text-gray-300">
+                            <li class="bg-brand-dark/50 p-2 rounded-lg border border-brand-border/40">
+                                <span class="text-gray-400 block text-[10px] font-semibold mb-0.5">Sunday, 18 October 2026</span>
+                                <span class="text-white font-medium">03:00 — Dundee vs Rangers</span><br>
+                                <span class="text-purple-400 text-[11px]">📺 beIN Sports 1 Australia</span>
+                            </li>
+                            <li class="bg-brand-dark/50 p-2 rounded-lg border border-brand-border/40">
+                                <span class="text-gray-400 block text-[10px] font-semibold mb-0.5">Sunday, 18 October 2026</span>
+                                <span class="text-white font-medium">22:00 — Celtic vs Hearts</span><br>
+                                <span class="text-purple-400 text-[11px]">📺 beIN Sports 1 Australia</span>
+                            </li>
+                        </ul>
+                    </div>
+                </div>
+
+                <!-- Super League (Indonesia) -->
+                <div class="bg-brand-card border border-brand-border rounded-2xl p-4 shadow-lg flex flex-col justify-between">
+                    <div>
+                        <div class="flex items-center justify-between mb-3 border-b border-brand-border/60 pb-2">
+                            <h3 class="text-sm font-bold text-red-400 uppercase tracking-wide">Super League (Indonesia)</h3>
+                            <span class="text-[10px] bg-red-500/10 text-red-300 px-2 py-0.5 rounded border border-red-500/20 font-semibold">Indonesia</span>
+                        </div>
+                        <ul class="space-y-3 text-xs text-gray-300">
+                            <li class="bg-brand-dark/50 p-2 rounded-lg border border-brand-border/40">
+                                <span class="text-gray-400 block text-[10px] font-semibold mb-0.5">Friday, 16 October 2026</span>
+                                <span class="text-white font-medium">16:30 — PSIM Yogyakarta vs PSM</span><br>
+                                <span class="text-red-400 text-[11px]">📺 Indosiar</span>
+                            </li>
+                            <li class="bg-brand-dark/50 p-2 rounded-lg border border-brand-border/40">
+                                <span class="text-gray-400 block text-[10px] font-semibold mb-0.5">Saturday, 17 October 2026</span>
+                                <span class="text-white font-medium">16:30 — Garudayaksa vs Arema</span><br>
+                                <span class="text-red-400 text-[11px]">📺 Indosiar</span>
+                            </li>
+                            <li class="bg-brand-dark/50 p-2 rounded-lg border border-brand-border/40">
+                                <span class="text-gray-400 block text-[10px] font-semibold mb-0.5">Saturday, 17 October 2026</span>
+                                <span class="text-white font-medium">20:00 — Persita vs Persija</span><br>
+                                <span class="text-red-400 text-[11px]">📺 Indosiar</span>
+                            </li>
+                            <li class="bg-brand-dark/50 p-2 rounded-lg border border-brand-border/40">
+                                <span class="text-gray-400 block text-[10px] font-semibold mb-0.5">Sunday, 18 October 2026</span>
+                                <span class="text-white font-medium">16:30 — Persebaya Surabaya vs PSS Sleman</span><br>
+                                <span class="text-red-400 text-[11px]">📺 Indosiar</span>
+                            </li>
+                            <li class="bg-brand-dark/50 p-2 rounded-lg border border-brand-border/40">
+                                <span class="text-gray-400 block text-[10px] font-semibold mb-0.5">Sunday, 18 October 2026</span>
+                                <span class="text-white font-medium">20:00 — Persib vs Persik Kediri</span><br>
+                                <span class="text-red-400 text-[11px]">📺 Indosiar</span>
+                            </li>
+                        </ul>
+                    </div>
+                </div>
+
+                <!-- International Friendly -->
+                <div class="bg-brand-card border border-brand-border rounded-2xl p-4 shadow-lg flex flex-col justify-between">
+                    <div>
+                        <div class="flex items-center justify-between mb-3 border-b border-brand-border/60 pb-2">
+                            <h3 class="text-sm font-bold text-blue-400 uppercase tracking-wide">International Friendly</h3>
+                            <span class="text-[10px] bg-blue-500/10 text-blue-300 px-2 py-0.5 rounded border border-blue-500/20 font-semibold">Friendly</span>
+                        </div>
+                        <ul class="space-y-3 text-xs text-gray-300">
+                            <li class="bg-brand-dark/50 p-2 rounded-lg border border-brand-border/40">
+                                <span class="text-gray-400 block text-[10px] font-semibold mb-0.5">Saturday, 14 November 2026</span>
+                                <span class="text-white font-medium">02:00 — Jordan vs Indonesia</span><br>
+                                <span class="text-blue-400 text-[11px]">📺 Indosiar, SCTV</span>
+                            </li>
+                        </ul>
+                    </div>
+                </div>
+
+                <!-- AFC Champions League Two -->
+                <div class="bg-brand-card border border-brand-border rounded-2xl p-4 shadow-lg flex flex-col justify-between">
+                    <div>
+                        <div class="flex items-center justify-between mb-3 border-b border-brand-border/60 pb-2">
+                            <h3 class="text-sm font-bold text-yellow-400 uppercase tracking-wide">AFC Champions League Two</h3>
+                            <span class="text-[10px] bg-yellow-500/10 text-yellow-300 px-2 py-0.5 rounded border border-yellow-500/20 font-semibold">Asia</span>
+                        </div>
+                        <ul class="space-y-3 text-xs text-gray-300">
+                            <li class="bg-brand-dark/50 p-2 rounded-lg border border-brand-border/40">
+                                <span class="text-gray-400 block text-[10px] font-semibold mb-0.5">Wednesday, 28 October 2026</span>
+                                <span class="text-white font-medium">20:15 — Persib vs Melbourne Victory</span><br>
+                                <span class="text-yellow-400 text-[11px]">📺 GTV, RCTI, iNews</span>
+                            </li>
+                            <li class="bg-brand-dark/50 p-2 rounded-lg border border-brand-border/40">
+                                <span class="text-gray-400 block text-[10px] font-semibold mb-0.5">Wednesday, 4 November 2026</span>
+                                <span class="text-white font-medium">15:45 — Melbourne Victory vs Persib</span><br>
+                                <span class="text-yellow-400 text-[11px]">📺 GTV, RCTI, iNews</span>
+                            </li>
+                            <li class="bg-brand-dark/50 p-2 rounded-lg border border-brand-border/40">
+                                <span class="text-gray-400 block text-[10px] font-semibold mb-0.5">Wednesday, 25 November 2026</span>
+                                <span class="text-white font-medium">20:15 — Persib vs Seoul</span><br>
+                                <span class="text-yellow-400 text-[11px]">📺 RCTI, iNews</span>
+                            </li>
+                        </ul>
+                    </div>
+                </div>
+
+                <!-- ASEAN Club Championship -->
+                <div class="bg-brand-card border border-brand-border rounded-2xl p-4 shadow-lg flex flex-col justify-between">
+                    <div>
+                        <div class="flex items-center justify-between mb-3 border-b border-brand-border/60 pb-2">
+                            <h3 class="text-sm font-bold text-pink-400 uppercase tracking-wide">ASEAN Club Championship</h3>
+                            <span class="text-[10px] bg-pink-500/10 text-pink-300 px-2 py-0.5 rounded border border-pink-500/20 font-semibold">ASEAN</span>
+                        </div>
+                        <ul class="space-y-3 text-xs text-gray-300">
+                            <li class="bg-brand-dark/50 p-2 rounded-lg border border-brand-border/40">
+                                <span class="text-gray-400 block text-[10px] font-semibold mb-0.5">Wednesday, 18 November 2026</span>
+                                <span class="text-white font-medium">20:00 — Borneo vs Manila Digger</span><br>
+                                <span class="text-pink-400 text-[11px]">📺 RCTI</span>
+                            </li>
+                            <li class="bg-brand-dark/50 p-2 rounded-lg border border-brand-border/40">
+                                <span class="text-gray-400 block text-[10px] font-semibold mb-0.5">Thursday, 19 November 2026</span>
+                                <span class="text-white font-medium">20:00 — Persib vs Shan United</span><br>
+                                <span class="text-pink-400 text-[11px]">📺 RCTI</span>
+                            </li>
+                        </ul>
+                    </div>
+                </div>
+
+                <!-- Liga MX -->
+                <div class="bg-brand-card border border-brand-border rounded-2xl p-4 shadow-lg flex flex-col justify-between">
+                    <div>
+                        <div class="flex items-center justify-between mb-3 border-b border-brand-border/60 pb-2">
+                            <h3 class="text-sm font-bold text-teal-400 uppercase tracking-wide">Liga MX</h3>
+                            <span class="text-[10px] bg-teal-500/10 text-teal-300 px-2 py-0.5 rounded border border-teal-500/20 font-semibold">Mexico</span>
+                        </div>
+                        <ul class="space-y-3 text-xs text-gray-300">
+                            <li class="bg-brand-dark/50 p-2 rounded-lg border border-brand-border/40">
+                                <span class="text-gray-400 block text-[10px] font-semibold mb-0.5">Sunday, 18 October 2026</span>
+                                <span class="text-white font-medium">07:07 — Guadalajara vs Tigres UANL</span><br>
+                                <span class="text-teal-400 text-[11px]">📺 NBC Universo</span>
+                            </li>
+                            <li class="bg-brand-dark/50 p-2 rounded-lg border border-brand-border/40">
+                                <span class="text-gray-400 block text-[10px] font-semibold mb-0.5">Wednesday, 21 October 2026</span>
+                                <span class="text-white font-medium">08:07 — Guadalajara vs Necaxa</span><br>
+                                <span class="text-teal-400 text-[11px]">📺 NBC Universo</span>
+                            </li>
+                            <li class="bg-brand-dark/50 p-2 rounded-lg border border-brand-border/40">
+                                <span class="text-gray-400 block text-[10px] font-semibold mb-0.5">Wednesday, 21 October 2026</span>
+                                <span class="text-white font-medium">11:00 — Tigres UANL vs León</span><br>
+                                <span class="text-teal-400 text-[11px]">📺 NBC Universo</span>
+                            </li>
+                        </ul>
+                    </div>
+                </div>
+
+                <!-- A-League -->
+                <div class="bg-brand-card border border-brand-border rounded-2xl p-4 shadow-lg flex flex-col justify-between">
+                    <div>
+                        <div class="flex items-center justify-between mb-3 border-b border-brand-border/60 pb-2">
+                            <h3 class="text-sm font-bold text-orange-400 uppercase tracking-wide">A-League</h3>
+                            <span class="text-[10px] bg-orange-500/10 text-orange-300 px-2 py-0.5 rounded border border-orange-500/20 font-semibold">Australia</span>
+                        </div>
+                        <ul class="space-y-3 text-xs text-gray-300">
+                            <li class="bg-brand-dark/50 p-2 rounded-lg border border-brand-border/40">
+                                <span class="text-gray-400 block text-[10px] font-semibold mb-0.5">Saturday, 17 October 2026</span>
+                                <span class="text-white font-medium">12:00 — Auckland vs Melbourne City</span><br>
+                                <span class="text-orange-400 text-[11px]">📺 SPOTV Asia</span>
+                            </li>
+                            <li class="bg-brand-dark/50 p-2 rounded-lg border border-brand-border/40">
+                                <span class="text-gray-400 block text-[10px] font-semibold mb-0.5">Saturday, 17 October 2026</span>
+                                <span class="text-white font-medium">14:00 — Macarthur vs Perth Glory</span><br>
+                                <span class="text-orange-400 text-[11px]">📺 SPOTV Asia</span>
+                            </li>
+                            <li class="bg-brand-dark/50 p-2 rounded-lg border border-brand-border/40">
+                                <span class="text-gray-400 block text-[10px] font-semibold mb-0.5">Sunday, 18 October 2026</span>
+                                <span class="text-white font-medium">10:00 — Wellington Phoenix vs Melbourne Victory</span><br>
+                                <span class="text-orange-400 text-[11px]">📺 SPOTV Asia</span>
+                            </li>
+                        </ul>
+                    </div>
+                </div>
+
+                <!-- Indian Super League -->
+                <div class="bg-brand-card border border-brand-border rounded-2xl p-4 shadow-lg flex flex-col justify-between">
+                    <div>
+                        <div class="flex items-center justify-between mb-3 border-b border-brand-border/60 pb-2">
+                            <h3 class="text-sm font-bold text-indigo-400 uppercase tracking-wide">Indian Super League</h3>
+                            <span class="text-[10px] bg-indigo-500/10 text-indigo-300 px-2 py-0.5 rounded border border-indigo-500/20 font-semibold">India</span>
+                        </div>
+                        <ul class="space-y-3 text-xs text-gray-300">
+                            <li class="bg-brand-dark/50 p-2 rounded-lg border border-brand-border/40">
+                                <span class="text-gray-400 block text-[10px] font-semibold mb-0.5">Friday, 16 October 2026</span>
+                                <span class="text-white font-medium">22:00 — SC Delhi vs Mohun Bagan</span><br>
+                                <span class="text-indigo-400 text-[11px]">📺 Sony Sports Ten 2</span>
+                            </li>
+                            <li class="bg-brand-dark/50 p-2 rounded-lg border border-brand-border/40">
+                                <span class="text-gray-400 block text-[10px] font-semibold mb-0.5">Saturday, 17 October 2026</span>
+                                <span class="text-white font-medium">19:30 — Inter Kashi vs Delhi Dynamos</span><br>
+                                <span class="text-indigo-400 text-[11px]">📺 Sony Sports Ten 2</span>
+                            </li>
+                            <li class="bg-brand-dark/50 p-2 rounded-lg border border-brand-border/40">
+                                <span class="text-gray-400 block text-[10px] font-semibold mb-0.5">Saturday, 17 October 2026</span>
+                                <span class="text-white font-medium">22:00 — Bengaluru vs Chennaiyin</span><br>
+                                <span class="text-indigo-400 text-[11px]">📺 Sony Sports Ten 2</span>
+                            </li>
+                            <li class="bg-brand-dark/50 p-2 rounded-lg border border-brand-border/40">
+                                <span class="text-gray-400 block text-[10px] font-semibold mb-0.5">Sunday, 18 October 2026</span>
+                                <span class="text-white font-medium">19:30 — Churchill Brothers vs East Bengal II</span><br>
+                                <span class="text-indigo-400 text-[11px]">📺 Sony Sports Ten 2</span>
+                            </li>
+                            <li class="bg-brand-dark/50 p-2 rounded-lg border border-brand-border/40">
+                                <span class="text-gray-400 block text-[10px] font-semibold mb-0.5">Sunday, 18 October 2026</span>
+                                <span class="text-white font-medium">22:00 — NorthEast United vs Kerala Blasters</span><br>
+                                <span class="text-indigo-400 text-[11px]">📺 Sony Sports Ten 2</span>
+                            </li>
+                            <li class="bg-brand-dark/50 p-2 rounded-lg border border-brand-border/40">
+                                <span class="text-gray-400 block text-[10px] font-semibold mb-0.5">Monday, 19 October 2026</span>
+                                <span class="text-white font-medium">22:00 — RoundGlass Punjab vs Mumbai City</span><br>
+                                <span class="text-indigo-400 text-[11px]">📺 Sony Sports Ten 2</span>
+                            </li>
+                            <li class="bg-brand-dark/50 p-2 rounded-lg border border-brand-border/40">
+                                <span class="text-gray-400 block text-[10px] font-semibold mb-0.5">Friday, 23 October 2026</span>
+                                <span class="text-white font-medium">19:30 — Inter Kashi vs East Bengal II</span><br>
+                                <span class="text-indigo-400 text-[11px]">📺 Sony Sports Ten 2</span>
+                            </li>
+                            <li class="bg-brand-dark/50 p-2 rounded-lg border border-brand-border/40">
+                                <span class="text-gray-400 block text-[10px] font-semibold mb-0.5">Saturday, 24 October 2026</span>
+                                <span class="text-white font-medium">22:00 — Delhi Dynamos vs NorthEast United</span><br>
+                                <span class="text-indigo-400 text-[11px]">📺 Sony Sports Ten 2</span>
+                            </li>
+                            <li class="bg-brand-dark/50 p-2 rounded-lg border border-brand-border/40">
+                                <span class="text-gray-400 block text-[10px] font-semibold mb-0.5">Sunday, 25 October 2026</span>
+                                <span class="text-white font-medium">19:30 — Churchill Brothers vs RoundGlass Punjab</span><br>
+                                <span class="text-indigo-400 text-[11px]">📺 Sony Sports Ten 2</span>
+                            </li>
+                            <li class="bg-brand-dark/50 p-2 rounded-lg border border-brand-border/40">
+                                <span class="text-gray-400 block text-[10px] font-semibold mb-0.5">Sunday, 25 October 2026</span>
+                                <span class="text-white font-medium">22:00 — Kerala Blasters vs Mumbai City</span><br>
+                                <span class="text-indigo-400 text-[11px]">📺 Sony Sports Ten 2</span>
+                            </li>
+                            <li class="bg-brand-dark/50 p-2 rounded-lg border border-brand-border/40">
+                                <span class="text-gray-400 block text-[10px] font-semibold mb-0.5">Monday, 26 October 2026</span>
+                                <span class="text-white font-medium">22:00 — Mohun Bagan vs Chennaiyin</span><br>
+                                <span class="text-indigo-400 text-[11px]">📺 Sony Sports Ten 2</span>
+                            </li>
+                            <li class="bg-brand-dark/50 p-2 rounded-lg border border-brand-border/40">
+                                <span class="text-gray-400 block text-[10px] font-semibold mb-0.5">Wednesday, 28 October 2026</span>
+                                <span class="text-white font-medium">22:00 — Goa vs SC Delhi</span><br>
+                                <span class="text-indigo-400 text-[11px]">📺 Sony Sports Ten 2</span>
+                            </li>
+                            <li class="bg-brand-dark/50 p-2 rounded-lg border border-brand-border/40">
+                                <span class="text-gray-400 block text-[10px] font-semibold mb-0.5">Friday, 30 October 2026</span>
+                                <span class="text-white font-medium">22:00 — NorthEast United vs Bengaluru</span><br>
+                                <span class="text-indigo-400 text-[11px]">📺 Sony Sports Ten 2</span>
+                            </li>
+                            <li class="bg-brand-dark/50 p-2 rounded-lg border border-brand-border/40">
+                                <span class="text-gray-400 block text-[10px] font-semibold mb-0.5">Saturday, 31 October 2026</span>
+                                <span class="text-white font-medium">19:30 — Chennaiyin vs Kerala Blasters</span><br>
+                                <span class="text-indigo-400 text-[11px]">📺 Sony Sports Ten 2</span>
+                            </li>
+                            <li class="bg-brand-dark/50 p-2 rounded-lg border border-brand-border/40">
+                                <span class="text-gray-400 block text-[10px] font-semibold mb-0.5">Saturday, 31 October 2026</span>
+                                <span class="text-white font-medium">22:00 — Mohun Bagan vs RoundGlass Punjab</span><br>
+                                <span class="text-indigo-400 text-[11px]">📺 Sony Sports Ten 2</span>
+                            </li>
+                            <li class="bg-brand-dark/50 p-2 rounded-lg border border-brand-border/40">
+                                <span class="text-gray-400 block text-[10px] font-semibold mb-0.5">Sunday, 1 November 2026</span>
+                                <span class="text-white font-medium">19:30 — Mumbai City vs SC Delhi</span><br>
+                                <span class="text-indigo-400 text-[11px]">📺 Sony Sports Ten 2</span>
+                            </li>
+                            <li class="bg-brand-dark/50 p-2 rounded-lg border border-brand-border/40">
+                                <span class="text-gray-400 block text-[10px] font-semibold mb-0.5">Sunday, 1 November 2026</span>
+                                <span class="text-white font-medium">22:00 — Inter Kashi vs Goa</span><br>
+                                <span class="text-indigo-400 text-[11px]">📺 Sony Sports Ten 2</span>
+                            </li>
+                            <li class="bg-brand-dark/50 p-2 rounded-lg border border-brand-border/40">
+                                <span class="text-gray-400 block text-[10px] font-semibold mb-0.5">Thursday, 5 November 2026</span>
+                                <span class="text-white font-medium">19:30 — Churchill Brothers vs NorthEast United</span><br>
+                                <span class="text-indigo-400 text-[11px]">📺 Sony Sports Ten 2</span>
+                            </li>
+                            <li class="bg-brand-dark/50 p-2 rounded-lg border border-brand-border/40">
+                                <span class="text-gray-400 block text-[10px] font-semibold mb-0.5">Thursday, 5 November 2026</span>
+                                <span class="text-white font-medium">22:00 — Mohun Bagan vs Delhi Dynamos</span><br>
+                                <span class="text-indigo-400 text-[11px]">📺 Sony Sports Ten 2</span>
+                            </li>
+                            <li class="bg-brand-dark/50 p-2 rounded-lg border border-brand-border/40">
+                                <span class="text-gray-400 block text-[10px] font-semibold mb-0.5">Friday, 6 November 2026</span>
+                                <span class="text-white font-medium">22:00 — Goa vs Bengaluru</span><br>
+                                <span class="text-indigo-400 text-[11px]">📺 Sony Sports Ten 2</span>
+                            </li>
+                            <li class="bg-brand-dark/50 p-2 rounded-lg border border-brand-border/40">
+                                <span class="text-gray-400 block text-[10px] font-semibold mb-0.5">Saturday, 7 November 2026</span>
+                                <span class="text-white font-medium">19:30 — Inter Kashi vs SC Delhi</span><br>
+                                <span class="text-indigo-400 text-[11px]">📺 Sony Sports Ten 2</span>
+                            </li>
+                            <li class="bg-brand-dark/50 p-2 rounded-lg border border-brand-border/40">
+                                <span class="text-gray-400 block text-[10px] font-semibold mb-0.5">Saturday, 7 November 2026</span>
+                                <span class="text-white font-medium">22:00 — Chennaiyin vs East Bengal II</span><br>
+                                <span class="text-indigo-400 text-[11px]">📺 Sony Sports Ten 2</span>
+                            </li>
+                        </ul>
+                    </div>
+                </div>
+
+                <!-- Major League Soccer (MLS) -->
+                <div class="bg-brand-card border border-brand-border rounded-2xl p-4 shadow-lg flex flex-col justify-between">
+                    <div>
+                        <div class="flex items-center justify-between mb-3 border-b border-brand-border/60 pb-2">
+                            <h3 class="text-sm font-bold text-red-500 uppercase tracking-wide">Major League Soccer (MLS)</h3>
+                            <span class="text-[10px] bg-red-500/10 text-red-300 px-2 py-0.5 rounded border border-red-500/20 font-semibold">USA</span>
+                        </div>
+                        <ul class="space-y-3 text-xs text-gray-300">
+                            <li class="bg-brand-dark/50 p-2 rounded-lg border border-brand-border/40">
+                                <span class="text-gray-400 block text-[10px] font-semibold mb-0.5">Monday, 2 November 2026</span>
+                                <span class="text-white font-medium">10:45 — Portland Timbers vs Houston Dynamo</span><br>
+                                <span class="text-red-500 text-[11px]">📺 Fox Sports 1 USA</span>
+                            </li>
+                        </ul>
+                    </div>
+                </div>
+
+                <!-- FIFA U-17 Women’s World Cup -->
+                <div class="bg-brand-card border border-brand-border rounded-2xl p-4 shadow-lg flex flex-col justify-between">
+                    <div>
+                        <div class="flex items-center justify-between mb-3 border-b border-brand-border/60 pb-2">
+                            <h3 class="text-sm font-bold text-cyan-300 uppercase tracking-wide">FIFA U-17 Women’s World Cup</h3>
+                            <span class="text-[10px] bg-cyan-500/10 text-cyan-300 px-2 py-0.5 rounded border border-cyan-500/20 font-semibold">FIFA</span>
+                        </div>
+                        <ul class="space-y-3 text-xs text-gray-300">
+                            <li class="bg-brand-dark/50 p-2 rounded-lg border border-brand-border/40">
+                                <span class="text-gray-400 block text-[10px] font-semibold mb-0.5">Monday, 19 October 2026</span>
+                                <span class="text-white font-medium">21:55 — Spain U17 vs Mexico U17</span><br>
+                                <span class="text-cyan-300 text-[11px]">📺 NBC Universo</span>
+                            </li>
+                            <li class="bg-brand-dark/50 p-2 rounded-lg border border-brand-border/40">
+                                <span class="text-gray-400 block text-[10px] font-semibold mb-0.5">Tuesday, 20 October 2026</span>
+                                <span class="text-white font-medium">00:55 — USA U17 vs Samoa U17</span><br>
+                                <span class="text-cyan-300 text-[11px]">📺 NBC Universo</span>
+                            </li>
+                            <li class="bg-brand-dark/50 p-2 rounded-lg border border-brand-border/40">
+                                <span class="text-gray-400 block text-[10px] font-semibold mb-0.5">Friday, 23 October 2026</span>
+                                <span class="text-white font-medium">02:00 — Chile U17 vs Mexico U17</span><br>
+                                <span class="text-cyan-300 text-[11px]">📺 NBC Universo</span>
+                            </li>
+                            <li class="bg-brand-dark/50 p-2 rounded-lg border border-brand-border/40">
+                                <span class="text-gray-400 block text-[10px] font-semibold mb-0.5">Sunday, 25 October 2026</span>
+                                <span class="text-white font-medium">23:00 — Mexico U17 vs Australia U17</span><br>
+                                <span class="text-cyan-300 text-[11px]">📺 NBC Universo</span>
+                            </li>
+                        </ul>
+                    </div>
+                </div>
+
+                <!-- CONCACAF Nations League -->
+                <div class="bg-brand-card border border-brand-border rounded-2xl p-4 shadow-lg flex flex-col justify-between">
+                    <div>
+                        <div class="flex items-center justify-between mb-3 border-b border-brand-border/60 pb-2">
+                            <h3 class="text-sm font-bold text-amber-300 uppercase tracking-wide">CONCACAF Nations League</h3>
+                            <span class="text-[10px] bg-amber-500/10 text-amber-300 px-2 py-0.5 rounded border border-amber-500/20 font-semibold">CONCACAF</span>
+                        </div>
+                        <ul class="space-y-3 text-xs text-gray-300">
+                            <li class="bg-brand-dark/50 p-2 rounded-lg border border-brand-border/40">
+                                <span class="text-gray-400 block text-[10px] font-semibold mb-0.5">Sunday, 15 November 2026</span>
+                                <span class="text-white font-medium">05:30 — Haiti vs USA</span><br>
+                                <span class="text-amber-300 text-[11px]">📺 NBC Universo</span>
+                            </li>
+                        </ul>
+                    </div>
+                </div>
+
+            </div>
+        </div>
     </div>
 
     <!-- Video.js JS Library -->
     <script src="https://vjs.zencdn.net/8.10.0/video.min.js"></script>
 
     <script>
-        // Data Structure for Segments and Channels
+        // Data Structure for Segments and Channels (Termasuk USA Network)
         const channelsData = {
             seg1: [
+                { id: 'seg1-usa-network', name: "USA Network", type: "m3u8", src: "https://footfytv.pro/proxy/direct?url=http://4.30.180.36:8420/usa/index.m3u8?token=test", tag: "Live" },
                 { id: 'seg1-bein1-aus', name: "beIN Sports 1 Australia", type: "m3u8", src: "https://iptv.lancartech.co.id:443/Wawan007/Wawan1234/70.m3u8", tag: "Live" },
                 { id: 'seg1-bein2-aus', name: "beIN Sports 2 Australia", type: "m3u8", src: "https://iptv.lancartech.co.id:443/Wawan007/Wawan1234/73.m3u8", tag: "Live" },
                 { id: 'seg1-spotv', name: "SPOTV Asia", type: "m3u8", src: "https://iptv.lancartech.co.id:443/Wawan007/Wawan1234/84.m3u8", tag: "Live" },
@@ -260,6 +770,26 @@
 
         let currentActiveStream = null;
         let vjsPlayer = null;
+
+        // Switch Tabs Function
+        function switchTab(tabName) {
+            const liveContent = document.getElementById('tabContent-livestream');
+            const schedContent = document.getElementById('tabContent-schedule');
+            const liveBtn = document.getElementById('tabBtn-livestream');
+            const schedBtn = document.getElementById('tabBtn-schedule');
+
+            if (tabName === 'livestream') {
+                liveContent.classList.remove('hidden');
+                schedContent.classList.add('hidden');
+                liveBtn.className = "px-4 py-1.5 rounded-lg text-xs font-bold transition bg-cyan-500 text-black shadow";
+                schedBtn.className = "px-4 py-1.5 rounded-lg text-xs font-bold transition text-gray-400 hover:text-white";
+            } else {
+                liveContent.classList.add('hidden');
+                schedContent.classList.remove('hidden');
+                schedBtn.className = "px-4 py-1.5 rounded-lg text-xs font-bold transition bg-cyan-500 text-black shadow";
+                liveBtn.className = "px-4 py-1.5 rounded-lg text-xs font-bold transition text-gray-400 hover:text-white";
+            }
+        }
 
         // Render Sidebar Channels dynamically
         function renderSidebarChannels() {
@@ -293,7 +823,7 @@
             }
         }
 
-        // Play Selected Stream (Video.js HLS or iframe)
+        // Play Selected Stream
         function playStream(segKey, channelId) {
             const channel = channelsData[segKey].find(c => c.id === channelId);
             if (!channel) return;
@@ -310,7 +840,6 @@
             badgeEl.classList.remove('hidden');
             placeholderEl.classList.add('hidden');
 
-            // Active button highlight
             document.querySelectorAll('.channel-btn').forEach(btn => {
                 btn.classList.remove('border-cyan-500', 'bg-cyan-950/40', 'text-cyan-300');
             });
@@ -321,11 +850,9 @@
             }
 
             if (channel.type === 'm3u8') {
-                // Hide iframe player
                 iframeVideo.classList.add('hidden');
                 iframeVideo.src = '';
 
-                // Show Video.js Player
                 vjsWrapper.classList.remove('hidden');
                 initVideoJS();
 
@@ -334,17 +861,6 @@
                     type: 'application/x-mpegURL'
                 });
                 vjsPlayer.play();
-
-            } else if (channel.type === 'iframe') {
-                // Pause and hide Video.js player if active
-                if (vjsPlayer) {
-                    vjsPlayer.pause();
-                }
-                vjsWrapper.classList.add('hidden');
-
-                // Display iframe
-                iframeVideo.classList.remove('hidden');
-                iframeVideo.src = channel.src;
             }
 
             if (window.innerWidth < 1024) {
@@ -361,17 +877,13 @@
 
         // Fullscreen Controls
         function toggleFullscreen() {
-            const iframeVideo = document.getElementById('iframePlayer');
             const vjsWrapper = document.getElementById('videojs-wrapper');
-
             if (!vjsWrapper.classList.contains('hidden') && vjsPlayer) {
                 if (vjsPlayer.isFullscreen()) {
                     vjsPlayer.exitFullscreen();
                 } else {
                     vjsPlayer.requestFullscreen();
                 }
-            } else if (!iframeVideo.classList.contains('hidden')) {
-                if (iframeVideo.requestFullscreen) iframeVideo.requestFullscreen();
             }
         }
 
